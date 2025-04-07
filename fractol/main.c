@@ -6,13 +6,11 @@
 /*   By: zkharbac <zkharbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:48:02 by zkharbac          #+#    #+#             */
-/*   Updated: 2025/04/05 16:25:32 by zkharbac         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:24:46 by zkharbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-#include <unistd.h>
-#include <math.h>
+#include "fractol.h"
 
 typedef struct s_data {
     void    *img;
@@ -30,49 +28,45 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void draw_circle(t_data *data, int win_width, int win_height)
+void draw_square(t_data *img, int x0, int y0, int size, int color)
 {
     int x, y;
-    int cx = win_width / 2; // center x
-    int cy = win_height / 2; // center y
-    int r = 100; // radius
-    int color = 0x00FF0000; // Red color
-
-    for (x = 0; x < win_width; x++)
+    
+    for (x = x0 ; x < x0 +size ; x++)
     {
-        for (y = 0; y < win_height; y++)
-        {
-            // Check if the point (x, y) lies on the circle
-            if (pow(x - cx, 2) + pow(y - cy, 2) <= pow(r, 2))
+        for(y=y0; y<y0+size ; y++)
             {
-                my_mlx_pixel_put(data, x, y, color); // Draw the pixel
+                my_mlx_pixel_put(img, x, y, color); // Draw the pixel
             }
-        }
+        
     }
 }
+#include <stdio.h>
 
-int main(void)
+int ft_strncmp(char *s1, char *s2, int n)
 {
-    void    *mlx;
-    void    *mlx_win;
-    t_data  img;
-    int     win_width = 800;
-    int     win_height = 600;
-
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, win_width, win_height, "Circle");
-    img.img = mlx_new_image(mlx, win_width, win_height);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-
-    // Draw the circle in the middle of the window
-    draw_circle(&img, win_width, win_height);
-
-    // Put the image on the window
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-
-    // Enter the main loop to display the window
-    mlx_loop(mlx);
-
-    return (0);
+    int i = 0;
+    while (n > 0 && ((s1[i] == s2[i]) && (s1[i] || s2[i])))
+    {
+        i++;
+        n--;
+    }
+    if (n == 0)
+        return 0;
+    return (s1[i] - s2[i]);
 }
- 
+
+int main(int ac, char **av)
+{
+    t_fractal fractal;
+    if (ac == 2 && ft_strncmp(av[1], "mandelbrot", 11) == 0)
+    {
+        
+        printf("✅ it worked\n");
+        fractol_init(&fractal);
+    }
+    else
+        printf("❌ ser bhalk\n");
+
+    return 0;
+}
