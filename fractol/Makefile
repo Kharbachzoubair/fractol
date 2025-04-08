@@ -1,13 +1,27 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I.
-NAME = fractol
-SRC = fractol.c init.c render.c hooks.c utils.c
+
+CFLAGS = -Wall -Wextra -Werror
+
+SRC = fractol.c \
+		main.c \
+		events.c \
+		math_utils.c \
+		init.c \
+		string_utils.c \
+
+
+
 OBJ = $(SRC:.c=.o)
+
+NAME = fractol
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -lmlx -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lmlx -framework OpenGL -framework AppKit
+
+%.o: %.c fractol.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -16,3 +30,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
