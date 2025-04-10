@@ -6,7 +6,7 @@
 /*   By: zkharbac <zkharbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:40:44 by zkharbac          #+#    #+#             */
-/*   Updated: 2025/04/08 16:18:29 by zkharbac         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:04:00 by zkharbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 static void	malloc_error(void)
 {
-	perror("Problems with malloc");
+	ft_putstr("Problems with malloc");
 	exit(EXIT_FAILURE);
 }
 
 static void	data_init(t_fractal *fractal)
 {
 	fractal->escape_value = 4;
-	fractal->iterations_defintion = 42; 
-	fractal->shift_x = 0.0;
-	fractal->shift_y = 0.0;
+	fractal->iterations_definition = 42;
 	fractal->zoom = 1.0;
 }
 

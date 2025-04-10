@@ -6,7 +6,7 @@
 /*   By: zkharbac <zkharbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:24:54 by zkharbac          #+#    #+#             */
-/*   Updated: 2025/04/08 18:10:01 by zkharbac         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:01:13 by zkharbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	my_pixel_put(int x, int y, t_img *img, int color)
 	*(unsigned int *)(img->pixels_ptr + offset) = color;
 }
 
-static void	mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+static void	mandel_against_julia(t_complex *z, t_complex *c, t_fractal *fractal)
 {
-	if (!ft_strncmp(fractal->name, "julia", 5))
+	if (!ft_strcmp(fractal->name, "julia"))
 	{
 		c->x = fractal->julia_x;
 		c->y = fractal->julia_y;
@@ -42,15 +42,15 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	int			color;
 
 	i = 0;
-	z.x = (map(x, -2, 2, WIDTH) / fractal->zoom) + fractal->shift_x;
-	z.y = (map(y, 2, -2, HEIGHT) / fractal->zoom) + fractal->shift_y;
-	mandel_vs_julia(&z, &c, fractal);
-	while (i < fractal->iterations_defintion)
+	z.x = (map(x, -2, 2, WIDTH) / fractal->zoom);
+	z.y = (map(y, 2, -2, HEIGHT) / fractal->zoom);
+	mandel_against_julia(&z, &c, fractal);
+	while (i < fractal->iterations_definition)
 	{
 		z = sum_complex(square_complex(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
 		{
-			color = map(i, BLACK, WHITE, fractal->iterations_defintion);
+			color = map(i, BLACK, WHITE, fractal->iterations_definition);
 			my_pixel_put(x, y, &fractal->img, color);
 			return ;
 		}

@@ -6,61 +6,44 @@
 /*   By: zkharbac <zkharbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:56:23 by zkharbac          #+#    #+#             */
-/*   Updated: 2025/04/08 21:04:28 by zkharbac         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:11:50 by zkharbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	ft_strncmp(char *s1, char *s2, int n)
-{
-	if (NULL == s1 || NULL == s2 || n <= 0)
-		return (0);
-	while (*s1 == *s2 && n > 0 && *s1 != '\0')
-	{
-		++s1;
-		++s2;
-		--n;
-	}
-	return (*s1 - *s2);
-}
-
-void	ft_putstr(char *s)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
-	{
-		write(1, &s[i], 1);
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	}
+	return (s1[i] - s2[i]);
 }
 
-double	atodbl(char *s)
+void	ft_putstr(char *s)
 {
-	long	integer_part;
-	double	fractional_part;
-	double	pow;
-	int		sign;
-
-	integer_part = 0;
-	fractional_part = 0;
-	sign = +1;
-	pow = 1;
-	while ((*s >= 9 && *s <= 13) || 32 == *s)
-		++s;
-	while ('+' == *s || '-' == *s)
-		if ('-' == *s++)
-			sign = -sign;
-	while (*s != '.' && *s)
-		integer_part = (integer_part * 10) + (*s++ - 48);
-	if ('.' == *s)
-		++s;
 	while (*s)
+		write(1, s++, 1);
+}
+
+void	ft_exit(void)
+{
+	ft_putstr("\033[1;31m🚨 ERROR: Invalid input! "
+		"Please provide a valid number.\033[0m\n");
+	exit(1);
+}
+
+int	len_num(double num)
+{
+	int	len;
+
+	len = 0;
+	while (num > 1)
 	{
-		pow /= 10;
-		fractional_part = fractional_part + (*s++ - 48) * pow;
+		num /= 10;
+		len++;
 	}
-	return ((integer_part + fractional_part) * sign);
+	return (len);
 }

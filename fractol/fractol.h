@@ -6,21 +6,18 @@
 /*   By: zkharbac <zkharbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:35:06 by zkharbac          #+#    #+#             */
-/*   Updated: 2025/04/08 21:03:28 by zkharbac         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:03:42 by zkharbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <stdio.h>
+# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h> 
 # include <math.h>
 # include <mlx.h>
-
-# define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol "
-# define ERROR_MESSAGE_CONT "julia <value_1> <value_2>\"\n"
 
 # define WIDTH 800
 # define HEIGHT 800
@@ -70,16 +67,17 @@ typedef struct s_fractal
 	t_img	img;
 	double	escape_value;
 	int		iterations_definition;
-	double	shift_x;
-	double	shift_y;
 	double	zoom;
 	double	julia_x;
 	double	julia_y;
 }				t_fractal;
 
-int			ft_strncmp(char *s1, char *s2, int n);
+int			ft_strcmp(char *s1, char *s2);
+void		ft_exit(void);
 void		ft_putstr(char *s);
-double		atodbl(char *s);
+double		atodbl(char *str);
+int			len_num(double num);
+long double	parse_number(char *str, int *i);
 void		fractal_init(t_fractal *fractal);
 void		fractal_render(t_fractal *fractal);
 double		map(double value, double new_min, double new_max, double old_max);

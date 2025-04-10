@@ -8,8 +8,7 @@ SRC = fractol.c \
 		math_utils.c \
 		init.c \
 		string_utils.c \
-
-
+		utils.c
 
 OBJ = $(SRC:.c=.o)
 
